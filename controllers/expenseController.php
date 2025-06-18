@@ -3,6 +3,8 @@
 
 // expenseController.php
 require_once(__DIR__ . '/../models/expense.php');
+require_once(__DIR__ . '/../models/category.php');
+
 
 
 // Fungsi untuk menambah pengeluaran
