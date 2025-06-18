@@ -1,0 +1,27 @@
+/* Mengatur body dan html agar bisa mengisi tinggi penuh */
+html, body {
+    height: 100%; /* Memastikan tinggi body dan html adalah 100% dari layar */
+    margin: 0;    /* Menghilangkan margin default */
+}
+
+/* Flexbox untuk memastikan layout */
+body {
+    display: flex;
+    flex-direction: column; /* Menata elemen secara vertikal */
+}
+
+/* Membuat konten utama bisa mengisi ruang yang tersedia */
+main {
+    flex-grow: 1; /* Konten utama mengisi ruang yang ada */
+    overflow-y: auto; /* Mengaktifkan scroll jika konten lebih panjang */
+}
+
+/* Memastikan footer berada di bawah */
+footer {
+    background-color: #f8f9fa; /* Warna footer */
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    text-align: center;
+    width: 100%;
+    margin-top: auto; /* Footer tetap di bawah halaman */
+}
