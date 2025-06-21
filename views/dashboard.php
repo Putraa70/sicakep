@@ -2,6 +2,8 @@
 // dashboard.php - Halaman utama setelah login
 
 require_once '../config/session.php';  // Perbaiki path ke session.php
+require_once '../controllers/incomeController.php';
+require_once '../controllers/expenseController.php';
 
 // Cek apakah pengguna sudah login
 if (!isLoggedIn()) {
@@ -106,6 +108,11 @@ $username = getUsername(); // Ambil nama pengguna dari session
             </div>
         </header>
 
+        <div class="container mt-5">
+            <h2 class="text-center mb-4">Grafik Pemasukan dan Pengeluaran</h2>
+            <canvas id="incomeExpenseChart" width="400" height="200"></canvas>
+        </div>
+
         <div class="container">
             <div class="row g-4">
                 <div class="col-lg-4 col-md-6">
@@ -148,6 +155,24 @@ $username = getUsername(); // Ambil nama pengguna dari session
                 <div class="col-lg-4 col-md-12">
                     <div class="card card-feature text-center">
                         <div class="card-header">
+                            History Pemasukan dan Pengeluaran
+                        </div>
+                        <div class="card-body p-4">
+                            <div>
+                                <div class="icon-container">
+                                    <i class="fas fa-tags"></i>
+                                </div>
+                                <p class="card-text mb-4">Kelola history pemasukan dan pengeluaran anda</p>
+                            </div>
+                            <a href="../views/transaction/transactionHistory.php"
+                                class="btn btn-primary-custom w-100">Kelola Kategori</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-8 col-sm-12 mx-auto">
+                    <div class="card card-feature text-center">
+                        <div class="card-header">
                             Kategori Keuangan
                         </div>
                         <div class="card-body p-4">
@@ -158,17 +183,81 @@ $username = getUsername(); // Ambil nama pengguna dari session
                                 <p class="card-text mb-4">Buat dan kelola kategori transaksi untuk pelacakan yang lebih
                                     terperinci.</p>
                             </div>
-                            <a href="../views/transaction/transactionHistory.php"
-                                class="btn btn-primary-custom w-100">Kelola Kategori</a>
+                            <a href="../views/category/listCategory.php" class="btn btn-primary-custom w-100">Kelola
+                                Kategori</a>
                         </div>
                     </div>
                 </div>
+
             </div>
 
         </div>
+
     </main>
 
     <?php include('includes/footer.php'); // Footer utama ?>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+    // Prepare data from PHP
+    const incomeData = <?= json_encode(getIncomeSummaryByUser(getUserId())); ?>;
+    const expenseData = <?= json_encode(getExpenseSummaryByUser(getUserId())); ?>;
+
+    // Process data to get labels (dates) and datasets
+    const labelsSet = new Set();
+    incomeData.forEach(item => labelsSet.add(item.date));
+    expenseData.forEach(item => labelsSet.add(item.date));
+    const labels = Array.from(labelsSet).sort();
+
+    const incomeMap = new Map(incomeData.map(item => [item.date, item.total_income]));
+    const expenseMap = new Map(expenseData.map(item => [item.date, item.total_expense]));
+
+    const incomeValues = labels.map(date => incomeMap.get(date) || 0);
+    const expenseValues = labels.map(date => expenseMap.get(date) || 0);
+
+    const ctx = document.getElementById('incomeExpenseChart').getContext('2d');
+    const incomeExpenseChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                    label: 'Pemasukan',
+                    data: incomeValues,
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    fill: true,
+                    tension: 0.1
+                },
+                {
+                    label: 'Pengeluaran',
+                    data: expenseValues,
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    fill: true,
+                    tension: 0.1
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Tanggal'
+                    }
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Jumlah (Rp)'
+                    },
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">

@@ -3,7 +3,6 @@
 
 require_once(__DIR__ . '/../config/db.php');
 
-
 class Expense {
     // Fungsi untuk menambah pengeluaran
     public static function addExpense($userId, $categoryId, $amount, $description, $date) {
@@ -70,6 +69,18 @@ class Expense {
         $stmt->bindParam(':expense_id', $expenseId);
 
         return $stmt->execute();
+    }
+
+    // Fungsi untuk mendapatkan ringkasan pengeluaran berdasarkan tanggal
+    public static function getExpenseSummaryByUser($userId) {
+        global $pdo;
+
+        $query = "SELECT date, SUM(amount) as total_expense FROM expenses WHERE user_id = :user_id GROUP BY date ORDER BY date ASC";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(':user_id', $userId);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
 ?>

@@ -1,24 +1,20 @@
 <?php
 // expenseController.php - Controller untuk pengeluaran
 
-// expenseController.php
 require_once(__DIR__ . '/../models/expense.php');
-require_once(__DIR__ . '/../models/category.php');
-
-
-
-// Fungsi untuk menambah pengeluaran
-function addExpense($userId, $categoryId, $amount, $description, $date) {
-    return Expense::addExpense($userId, $categoryId, $amount, $description, $date);
-}
 
 // Fungsi untuk mendapatkan semua pengeluaran
 function getExpenses($userId) {
     return Expense::getAllExpenses($userId);
 }
 
+// Fungsi untuk menambah pengeluaran
+function addExpense($userId, $categoryId, $amount, $description, $date) {
+    return Expense::addExpense($userId, $categoryId, $amount, $description, $date);
+}
+
 // Fungsi untuk mendapatkan pengeluaran berdasarkan ID
-function getExpense($expenseId) {
+function getExpenseById($expenseId) {
     return Expense::getExpenseById($expenseId);
 }
 
@@ -27,18 +23,13 @@ function updateExpense($expenseId, $categoryId, $amount, $description, $date) {
     return Expense::updateExpense($expenseId, $categoryId, $amount, $description, $date);
 }
 
-
-
-// Fungsi untuk mendapatkan kategori berdasarkan ID
-function getCategoryById($categoryId) {
-    return Category::getCategoryById($categoryId);  // Memanggil model Category untuk mendapatkan kategori berdasarkan ID
-}
-
 // Fungsi untuk menghapus pengeluaran
 function deleteExpense($expenseId) {
     return Expense::deleteExpense($expenseId);
 }
-// function getCategoryById($categoryId) {
-//     return Category::getCategoryById($categoryId);  // Memanggil model Category
-// }
+
+// Fungsi untuk mendapatkan ringkasan pengeluaran berdasarkan tanggal
+function getExpenseSummaryByUser($userId) {
+    return Expense::getExpenseSummaryByUser($userId);
+}
 ?>

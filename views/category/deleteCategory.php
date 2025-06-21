@@ -1,5 +1,5 @@
 <?php
-// addCategory.php - Halaman untuk menambah kategori baru
+// deleteCategory.php - Halaman untuk menghapus kategori
 
 require_once '../../config/session.php';
 require_once '../../controllers/categoryController.php';
@@ -10,18 +10,20 @@ if (!isLoggedIn()) {
     exit;
 }
 
+if (!isset($_GET['id'])) {
+    header('Location: listCategory.php');
+    exit;
+}
+
+$categoryId = $_GET['id'];
 $error = '';
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $name = trim($_POST['name']);
-    if ($name === '') {
-        $error = 'Nama kategori tidak boleh kosong.';
+    if (deleteCategory($categoryId)) {
+        header('Location: listCategory.php');
+        exit;
     } else {
-        if (addCategory($name)) {
-            header('Location: listCategory.php');
-            exit;
-        } else {
-            $error = 'Gagal menambah kategori. Silakan coba lagi.';
-        }
+        $error = 'Gagal menghapus kategori. Silakan coba lagi.';
     }
 }
 
@@ -33,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tambah Kategori | Sicakep</title>
+    <title>Hapus Kategori | Sicakep</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
@@ -42,18 +44,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <?php include('../includes/header.php'); ?>
 
     <div class="container mt-5">
-        <h2 class="text-center">Tambah Kategori</h2>
+        <h2 class="text-center">Hapus Kategori</h2>
         <?php if ($error): ?>
         <div class="alert alert-danger"><?= htmlspecialchars($error); ?></div>
-        <?php endif; ?>
-        <form method="POST" action="addCategory.php">
-            <div class="mb-3">
-                <label for="name" class="form-label">Nama Kategori</label>
-                <input type="text" class="form-control" id="name" name="name" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Simpan</button>
+        <?php else: ?>
+        <p>Apakah Anda yakin ingin menghapus kategori ini?</p>
+        <form method="POST" action="deleteCategory.php?id=<?= htmlspecialchars($categoryId); ?>">
+            <button type="submit" class="btn btn-danger">Hapus</button>
             <a href="listCategory.php" class="btn btn-secondary">Batal</a>
         </form>
+        <?php endif; ?>
     </div>
 
     <?php include('../includes/footer.php'); ?>

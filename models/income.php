@@ -1,9 +1,7 @@
 <?php
 // income.php - Model untuk pemasukan
 
-require_once(__DIR__ . '/../models/income.php');
 require_once(__DIR__ . '/../config/db.php');
-
 
 class Income {
     // Fungsi untuk menambah pemasukan
@@ -22,7 +20,7 @@ class Income {
         return $stmt->execute();
     }
 
-        public static function getAllIncomesByUser($userId) {
+    public static function getAllIncomesByUser($userId) {
         global $pdo;
 
         $query = "SELECT * FROM incomes WHERE user_id = :user_id ORDER BY date DESC";
@@ -73,8 +71,6 @@ class Income {
         return $stmt->execute();
     }
 
-
-
     // Fungsi untuk menghapus pemasukan
     public static function deleteIncome($incomeId) {
         global $pdo;
@@ -86,5 +82,16 @@ class Income {
         return $stmt->execute();
     }
     
+    // Fungsi untuk mendapatkan ringkasan pemasukan berdasarkan tanggal
+    public static function getIncomeSummaryByUser($userId) {
+        global $pdo;
+
+        $query = "SELECT date, SUM(amount) as total_income FROM incomes WHERE user_id = :user_id GROUP BY date ORDER BY date ASC";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(':user_id', $userId);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
 ?>

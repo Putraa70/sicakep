@@ -12,6 +12,13 @@ if (!isLoggedIn()) {
 
 $incomes = getIncomesByUser(getUserId()); // Mendapatkan daftar pemasukan berdasarkan ID pengguna
 
+// Definisikan array kategori sesuai dengan opsi di addIncome.php
+$categories = [
+    1 => 'Gaji',
+    2 => 'Usaha',
+    3 => 'Investasi'
+];
+
 ?>
 
 <!DOCTYPE html>
@@ -43,12 +50,12 @@ $incomes = getIncomesByUser(getUserId()); // Mendapatkan daftar pemasukan berdas
             </thead>
             <tbody>
                 <?php foreach ($incomes as $income): ?>
-                    <?php $category = getCategoryById($expense['category_id']); ?>
                 <tr>
-                    <td><?= $income['category_id']; ?></td>
+                    <td><?= isset($categories[$income['category_id']]) ? htmlspecialchars($categories[$income['category_id']]) : 'Unknown'; ?>
+                    </td>
                     <td><?= number_format($income['amount'], 0, ',', '.'); ?></td>
-                    <td><?= $income['description']; ?></td>
-                    <td><?= $income['date']; ?></td>
+                    <td><?= htmlspecialchars($income['description']); ?></td>
+                    <td><?= htmlspecialchars($income['date']); ?></td>
                     <td>
                         <a href="editIncome.php?id=<?= $income['id']; ?>" class="btn btn-warning btn-sm">Edit</a>
                         <a href="deleteIncome.php?id=<?= $income['id']; ?>" class="btn btn-danger btn-sm">Hapus</a>
