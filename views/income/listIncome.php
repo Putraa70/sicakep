@@ -43,6 +43,7 @@ $incomes = getIncomesByUser(getUserId()); // Mendapatkan daftar pemasukan berdas
             </thead>
             <tbody>
                 <?php foreach ($incomes as $income): ?>
+                    <?php $category = getCategoryById($expense['category_id']); ?>
                 <tr>
                     <td><?= $income['category_id']; ?></td>
                     <td><?= number_format($income['amount'], 0, ',', '.'); ?></td>
