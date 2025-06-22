@@ -13,11 +13,14 @@ if (!isLoggedIn()) {
 $error = '';
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $name = trim($_POST['name']);
+    $type = $_POST['type'] ?? '';
     if ($name === '') {
         $error = 'Nama kategori tidak boleh kosong.';
+    } elseif ($type !== 'income' && $type !== 'expense') {
+        $error = 'Pilih tipe kategori.';
     } else {
-        if (addCategory($name)) {
-            header('Location: listCategory.php');
+        if (addCategory($name, $type)) {
+            header('Location: listCategory.php?status=sukses&msg=' . urlencode('Kategori berhasil ditambah.'));
             exit;
         } else {
             $error = 'Gagal menambah kategori. Silakan coba lagi.';
@@ -47,13 +50,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div class="alert alert-danger"><?= htmlspecialchars($error); ?></div>
         <?php endif; ?>
         <form method="POST" action="addCategory.php">
-            <div class="mb-3">
-                <label for="name" class="form-label">Nama Kategori</label>
-                <input type="text" class="form-control" id="name" name="name" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Simpan</button>
-            <a href="listCategory.php" class="btn btn-secondary">Batal</a>
-        </form>
+    <div class="mb-3">
+        <label for="name" class="form-label">Nama Kategori</label>
+        <input type="text" class="form-control" id="name" name="name" required>
+    </div>
+    <div class="mb-3">
+        <label class="form-label d-block">Tipe Kategori</label>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="type" id="income" value="income" required>
+            <label class="form-check-label" for="income">Pemasukan</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="type" id="expense" value="expense" required>
+            <label class="form-check-label" for="expense">Pengeluaran</label>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Simpan</button>
+    <a href="listCategory.php" class="btn btn-secondary">Batal</a>
+</form>
+
     </div>
 
     <?php include('../includes/footer.php'); ?>
