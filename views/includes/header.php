@@ -69,36 +69,35 @@ require_once dirname(__DIR__, 2) . '/config/session.php';
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <?php if (isLoggedIn()): ?>
-                    <!-- Menu untuk pengguna yang sudah login -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="/views/dashboard.php">Dashboard</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/views/category/listCategory.php">Kategori</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/views/expense/listExpense.php">Pengeluaran</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/views/income/listIncome.php">Pemasukan</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/views/transaction/transactionHistory.php">History</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/views/auth/logout.php">Logout</a>
-                    </li>
-                    <?php else: ?>
-                    <!-- Menu untuk pengguna yang belum login -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="/views/auth/login.php">Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/views/auth/register.php">Daftar</a>
-                    </li>
-                    <?php endif; ?>
-                </ul>
+    <?php if (isLoggedIn()): ?>
+        <li class="nav-item">
+            <a class="nav-link" href="/sicakep/views/dashboard.php">Dashboard</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/sicakep/views/category/listCategory.php">Kategori</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/sicakep/views/expense/listExpense.php">Pengeluaran</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/sicakep/views/income/listIncome.php">Pemasukan</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/sicakep/views/transaction/transactionHistory.php">History</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/sicakep/views/auth/logout.php">Logout</a>
+        </li>
+    <?php else: ?>
+        <li class="nav-item">
+            <a class="nav-link" href="/sicakep/views/auth/login.php">Login</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/sicakep/views/auth/register.php">Daftar</a>
+        </li>
+    <?php endif; ?>
+</ul>
+
             </div>
         </div>
     </nav>
