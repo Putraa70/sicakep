@@ -1,4 +1,3 @@
- 
 <?php
 // user.php - Model untuk akun pengguna
 

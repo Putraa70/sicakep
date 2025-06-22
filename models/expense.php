@@ -20,6 +20,16 @@ class Expense {
         return $stmt->execute();
     }
 
+    public static function getCategoryById($categoryId) {
+    global $pdo;
+    $query = "SELECT * FROM categories WHERE id = :category_id";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(':category_id', $categoryId);
+    $stmt->execute();
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
+
     // Fungsi untuk mendapatkan semua pengeluaran
     public static function getAllExpenses($userId) {
         global $pdo;

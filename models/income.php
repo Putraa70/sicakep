@@ -72,15 +72,13 @@ class Income {
     }
 
     // Fungsi untuk menghapus pemasukan
-    public static function deleteIncome($incomeId) {
-        global $pdo;
+public static function deleteIncome($incomeId) {
+    global $pdo;
+    $stmt = $pdo->prepare("DELETE FROM incomes WHERE id = :id");
+    $stmt->bindParam(':id', $incomeId);
+    return $stmt->execute();
+}
 
-        $query = "DELETE FROM incomes WHERE id = :income_id";
-        $stmt = $pdo->prepare($query);
-        $stmt->bindParam(':income_id', $incomeId);
-
-        return $stmt->execute();
-    }
     
     // Fungsi untuk mendapatkan ringkasan pemasukan berdasarkan tanggal
     public static function getIncomeSummaryByUser($userId) {
