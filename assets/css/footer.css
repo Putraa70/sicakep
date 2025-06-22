@@ -1,27 +1,32 @@
-/* Mengatur body dan html agar bisa mengisi tinggi penuh */
-html, body {
-    height: 100%; /* Memastikan tinggi body dan html adalah 100% dari layar */
-    margin: 0;    /* Menghilangkan margin default */
-}
+/* assets/css/footer.css */
 
-/* Flexbox untuk memastikan layout */
-body {
-    display: flex;
-    flex-direction: column; /* Menata elemen secara vertikal */
-}
-
-/* Membuat konten utama bisa mengisi ruang yang tersedia */
+/* Menambahkan sedikit style pada tag <main> agar ada jarak dari footer */
 main {
-    flex-grow: 1; /* Konten utama mengisi ruang yang ada */
-    overflow-y: auto; /* Mengaktifkan scroll jika konten lebih panjang */
+  padding-bottom: 2rem;
 }
 
-/* Memastikan footer berada di bawah */
-footer {
-    background-color: #f8f9fa; /* Warna footer */
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-    text-align: center;
-    width: 100%;
-    margin-top: auto; /* Footer tetap di bawah halaman */
+.footer {
+  /* Warna teks putih transparan */
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+  text-align: center; /* TAMBAHKAN BARIS INI UNTUK MENENGKEHKAN SEMUA KONTEN */
+}
+
+.footer p {
+  margin-bottom: 0.5rem;
+}
+
+.footer a {
+  color: #ffffff; /* Warna link putih */
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer a:hover {
+  color: #ffc107; /* Warna link saat disentuh (kuning) */
+  text-decoration: underline;
+}
+
+.footer .text-muted {
+  color: rgba(255, 255, 255, 0.5) !important;
 }

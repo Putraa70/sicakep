@@ -82,5 +82,17 @@ class Expense {
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    // Fungsi untuk mendapatkan ringkasan pengeluaran bulanan
+    public static function getMonthlyExpenseSummaryByUser($userId) {
+        global $pdo;
+
+        $query = "SELECT DATE_FORMAT(date, '%Y-%m') as month, SUM(amount) as total_expense FROM expenses WHERE user_id = :user_id GROUP BY month ORDER BY month ASC";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(':user_id', $userId);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
 ?>

@@ -32,4 +32,9 @@ function deleteExpense($expenseId) {
 function getExpenseSummaryByUser($userId) {
     return Expense::getExpenseSummaryByUser($userId);
 }
+
+// Fungsi untuk mendapatkan ringkasan pengeluaran bulanan
+function getMonthlyExpenseSummaryByUser($userId) {
+    return Expense::getMonthlyExpenseSummaryByUser($userId);
+}
 ?>

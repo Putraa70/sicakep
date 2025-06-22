@@ -93,5 +93,17 @@ class Income {
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    // Fungsi untuk mendapatkan ringkasan pemasukan bulanan
+    public static function getMonthlyIncomeSummaryByUser($userId) {
+        global $pdo;
+
+        $query = "SELECT DATE_FORMAT(date, '%Y-%m') as month, SUM(amount) as total_income FROM incomes WHERE user_id = :user_id GROUP BY month ORDER BY month ASC";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(':user_id', $userId);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
 ?>

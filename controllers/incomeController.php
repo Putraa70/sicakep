@@ -64,4 +64,9 @@ function getIncomeById($incomeId) {
 function getIncomeSummaryByUser($userId) {
     return Income::getIncomeSummaryByUser($userId);
 }
+
+// Fungsi untuk mendapatkan ringkasan pemasukan bulanan
+function getMonthlyIncomeSummaryByUser($userId) {
+    return Income::getMonthlyIncomeSummaryByUser($userId);
+}
 ?>
