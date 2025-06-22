@@ -1,0 +1,32 @@
+/* assets/css/footer.css */
+
+/* Menambahkan sedikit style pada tag <main> agar ada jarak dari footer */
+main {
+  padding-bottom: 2rem;
+}
+
+.footer {
+  /* Warna teks putih transparan */
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+  text-align: center; /* TAMBAHKAN BARIS INI UNTUK MENENGKEHKAN SEMUA KONTEN */
+}
+
+.footer p {
+  margin-bottom: 0.5rem;
+}
+
+.footer a {
+  color: #ffffff; /* Warna link putih */
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer a:hover {
+  color: #ffc107; /* Warna link saat disentuh (kuning) */
+  text-decoration: underline;
+}
+
+.footer .text-muted {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
