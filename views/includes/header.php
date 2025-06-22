@@ -84,6 +84,9 @@ require_once dirname(__DIR__, 2) . '/config/session.php';
                         <a class="nav-link" href="/views/income/listIncome.php">Pemasukan</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="/views/transaction/transactionHistory.php">History</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="/views/auth/logout.php">Logout</a>
                     </li>
                     <?php else: ?>
